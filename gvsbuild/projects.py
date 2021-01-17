@@ -853,7 +853,7 @@ class Project_gtk3_22(Project_gtk_base):
         self.exec_cmd(r'%(gtk_dir)s\bin\gtk-update-icon-cache.exe --ignore-theme-index --force "%(gtk_dir)s\share\icons\hicolor"')
 
 @project_add
-class Project_gtk3_24(Tarball, Meson):
+class Project_gtk3_24(GitRepo, Meson):
     def __init__(self):
         if self.opts.gtk3_ver != '3.24':
             self.ignore()
@@ -862,11 +862,13 @@ class Project_gtk3_24(Tarball, Meson):
         Project.__init__(self,
             'gtk3',
             prj_dir='gtk3-24',
-            archive_url = 'http://ftp.acc.umu.se/pub/GNOME/sources/gtk+/3.24/gtk+-3.24.24.tar.xz',
-            hash = 'cc9d4367c55b724832f6b09ab85481738ea456871f0381768a6a99335a98378a',
+            repo_url = 'https://gitlab.gnome.org/GNOME/gtk.git',
+            fetch_submodules = False,
+            tag = 'gtk-3-24',
             dependencies = ['atk', 'gdk-pixbuf', 'pango', 'libepoxy'],
             patches = [
                 'gtk_update_icon_cache.patch',
+                'win32.patch',
             ],
             )
         if self.opts.enable_gi:
